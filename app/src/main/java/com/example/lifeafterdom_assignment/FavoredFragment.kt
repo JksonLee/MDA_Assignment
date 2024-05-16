@@ -92,6 +92,7 @@ class FavoredFragment : Fragment(), RoomsAdaptor.OnItemClickListener {
         dbRef = FirebaseDatabase.getInstance().getReference("Favoreds")
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                roomListFavored.clear()
                 if (snapshot.exists()) {
                     for (roomsSnap in snapshot.children) {
                         if (roomsSnap.child("userID").value.toString().toInt() == userID) {
@@ -99,7 +100,6 @@ class FavoredFragment : Fragment(), RoomsAdaptor.OnItemClickListener {
                             dbRef = FirebaseDatabase.getInstance().getReference("Rooms")
                             dbRef.addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
-                                    roomListFavored.clear()
                                     if (snapshot.exists()) {
                                         for (rooms in snapshot.children) {
                                             if (rooms.child("roomID").value.toString().toInt() == roomID) {

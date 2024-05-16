@@ -155,6 +155,7 @@ class HomeFragment : Fragment(), RoomsAdaptor.OnItemClickListener {
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
         dbRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                roomListRecommend.clear()
                 if(snapshot.exists()) {
                     for(roomsSnap in snapshot.children){
                         if(roomsSnap.child("userID").value.toString().toInt() == userID){
@@ -162,7 +163,6 @@ class HomeFragment : Fragment(), RoomsAdaptor.OnItemClickListener {
                             dbRef = FirebaseDatabase.getInstance().getReference("Rooms")
                             dbRef.addValueEventListener(object: ValueEventListener{
                                 override fun onDataChange(snapshot: DataSnapshot) {
-                                    roomListRecommend.clear()
                                     if(snapshot.exists()) {
                                         for(rooms in snapshot.children){
                                             if(rooms.child("address").value.toString().lowercase(Locale.ROOT).contains(city.lowercase())){
